@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .popup {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .dimmed {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.4
+        }
+
+        .popup_content {
+            position: absolute;
+            display: inline-block;
+            margin-left: -100px;
+            margin-top: -50px;
+            top: 50%;
+            width: 200px;
+            height: 100px;
+            border: 1px solid #000;
+            background: #eeeeff;
+        }
+    </style>
+</head>
+<body>
+<div class="popup">
+    <div class="dimmed"></div>
+</div>
+<script>
+  class Popup {
+    constructor(htOption) {
+      this.htOption = htOption;
+
+      this._cachedElement();
+      this._render();
+    }
+
+    _cachedElement() {
+      this.elWrap = document.createElement('div');
+      this.elWrap.classList.add('popup_content');
+    }
+
+    _render() {
+      const tmpl_popup = (data) => `
+        <div></div>
+      `;
+
+      this.elWrap.innerHTML = tmpl_popup(this.htOption, this);
+      document.querySelector('.popup').appendChild(this.elWrap);
+    }
+  }
+
+  class DeletePopup extends Popup {
+    constructor() {
+      super();
+    }
+  }
+
+  const oPopup = new Popup({
+    height: 'auto',
+    width: 400,
+    buttons: {
+      Confirm: function(e) {
+        console.log(this);
+        console.log(e);
+      },
+      Cancel: function() {
+        console.log('test');
+      },
+    },
+  });
+</script>
+</body>
+</html>
